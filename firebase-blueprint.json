@@ -1,0 +1,39 @@
+{
+  "entities": {
+    "Response": {
+      "title": "Response",
+      "description": "Visitor response to the proposal",
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "string",
+          "description": "The selected choice (e.g., 'Yes' or 'I Need More Time')"
+        },
+        "date": {
+          "type": "string",
+          "description": "The human-readable date string"
+        },
+        "time": {
+          "type": "string",
+          "description": "The human-readable time string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The server timestamp when the response was submitted"
+        },
+        "message": {
+          "type": "string",
+          "description": "An optional private note or message from the visitor"
+        }
+      },
+      "required": ["response", "date", "time"]
+    }
+  },
+  "firestore": {
+    "responses": {
+      "schema": "Response",
+      "description": "Collection of visitor responses to the proposal"
+    }
+  }
+}

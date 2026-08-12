@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Great+Vibes&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-cursive: "Great Vibes", cursive;
+}
+
+@layer utilities {
+  .bg-radial-gradient {
+    background-image: radial-gradient(circle at center, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 100%);
+  }
+}
+
+/* Custom styles for animations and soft glowing effects */
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-float {
+  animation: float 8s linear infinite;
+}
+
+/* Glassmorphism utility */
+.glass-card {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.glass-card-dark {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Liquid Crystal Button Utility Classes */
+.btn-liquid-crystal {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 228, 235, 0.65) 50%, rgba(255, 255, 255, 0.9) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    0 8px 25px -4px rgba(244, 114, 182, 0.35),
+    inset 0 1.5px 2.5px 0 rgba(255, 255, 255, 1),
+    inset 0 -1.5px 2.5px 0 rgba(244, 114, 182, 0.25);
+  color: #881337;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+.btn-liquid-crystal:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 210, 225, 0.85) 50%, rgba(255, 255, 255, 1) 100%);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 
+    0 12px 35px -2px rgba(225, 29, 72, 0.45),
+    inset 0 2px 4px 0 rgba(255, 255, 255, 1),
+    inset 0 -1.5px 3px 0 rgba(225, 29, 72, 0.3);
+  transform: translateY(-2px) scale(1.03);
+  color: #4c0519;
+}
+
+.btn-liquid-crystal:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 
+    0 4px 15px -2px rgba(225, 29, 72, 0.3),
+    inset 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.btn-liquid-crystal-primary {
+  position: relative;
+  background: linear-gradient(135deg, #fb7185 0%, #f43f5e 50%, #fda4af 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 
+    0 10px 30px -4px rgba(225, 29, 72, 0.45),
+    inset 0 2px 3px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -2px 4px 0 rgba(159, 18, 57, 0.3);
+  color: #ffffff;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+.btn-liquid-crystal-primary:hover {
+  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 50%, #fb7185 100%);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 
+    0 14px 40px -2px rgba(225, 29, 72, 0.6),
+    inset 0 2px 5px 0 rgba(255, 255, 255, 0.95);
+  transform: translateY(-2px) scale(1.04);
+  color: #ffffff;
+}
+
+.btn-liquid-crystal-primary:active {
+  transform: translateY(1px) scale(0.96);
+  box-shadow: 
+    0 4px 15px -2px rgba(225, 29, 72, 0.4),
+    inset 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-liquid-crystal-dark {
+  position: relative;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.9) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 
+    0 8px 25px -4px rgba(0, 0, 0, 0.6),
+    inset 0 1.5px 2.5px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1.5px 2.5px 0 rgba(244, 114, 182, 0.2);
+  color: #fecdd3;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+.btn-liquid-crystal-dark:hover {
+  background: linear-gradient(135deg, rgba(51, 65, 85, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 12px 35px -2px rgba(244, 63, 94, 0.4),
+    inset 0 2px 4px 0 rgba(255, 255, 255, 0.6);
+  color: #ffffff;
+  transform: translateY(-2px) scale(1.03);
+}
+
+.btn-liquid-crystal-dark:active {
+  transform: translateY(1px) scale(0.97);
+}
+
+/* Hide scrollbar but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
