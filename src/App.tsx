@@ -87,9 +87,8 @@ export default function App() {
     setMusicPlaying(prev => !prev);
   };
 
-  // Soft sparkle feedback sound for clicks
+  // Visual heart effect on stage navigation
   const triggerSparkleSoundAndEffect = (x?: number, y?: number) => {
-    ambientSynth.playSparkleTone();
     if (canvasRef.current) {
       canvasRef.current.burstHearts(x, y);
     }
@@ -136,7 +135,7 @@ export default function App() {
       <HeartsCanvas ref={canvasRef} />
 
       {/* Centralised YouTube Audio Player playing the user's requested song */}
-      <YouTubeAudioPlayer videoId="YiLjQu3U7jw" isPlaying={musicPlaying} />
+      <YouTubeAudioPlayer videoId="U8jcQDLxJwo" startTime={31} isPlaying={musicPlaying} />
 
       {/* Floating Sparkle details */}
       {!isDarkTheme && (
@@ -145,26 +144,6 @@ export default function App() {
           <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-amber-100/20 rounded-full blur-[120px] pointer-events-none" />
         </>
       )}
-
-      {/* Floating Interactive Music Box Prompt on Entry if not started */}
-      <AnimatePresence>
-        {!musicPlaying && stage !== "loading" && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-6 left-20 z-40"
-          >
-            <div 
-              onClick={handleToggleMusic}
-              className="btn-liquid-crystal px-4 py-2.5 rounded-full shadow-lg flex items-center space-x-2.5 cursor-pointer text-xs font-serif font-medium"
-            >
-              <div className="w-2 h-2 rounded-full bg-rose-400 animate-ping" />
-              <span>Tap to unmute soft romantic chords 🎵</span>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* HEADER CONTROLS */}
       {stage !== "loading" && (
@@ -175,13 +154,12 @@ export default function App() {
             className="flex items-center space-x-2 cursor-pointer group"
             onClick={() => {
               if (stage === "letter") {
-                ambientSynth.playSparkleTone();
                 canvasRef.current?.rainHearts();
               } else {
-                triggerSparkleSoundAndEffect();
+                canvasRef.current?.burstHearts();
               }
             }}
-            title={stage === "letter" ? "Click for Heart Rain 💕" : "Click for Sparkles ✨"}
+            title={stage === "letter" ? "Click for Heart Rain 💕" : "Click for Hearts 💕"}
           >
             <Heart className={`w-5 h-5 ${isDarkTheme ? "text-rose-300" : "text-rose-400"} fill-rose-300 animate-pulse group-hover:scale-125 transition-transform duration-300`} />
             <span className={`font-serif tracking-widest text-[10px] uppercase font-bold ${isDarkTheme ? "text-rose-200/70" : "text-rose-500/80"}`}>

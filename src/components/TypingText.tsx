@@ -12,8 +12,8 @@ interface TypingTextProps {
 
 export default function TypingText({
   text,
-  speed = 45,
-  delay = 120,
+  speed = 40,
+  delay = 100,
   className = "",
   playSound = true,
   onComplete,
@@ -24,7 +24,6 @@ export default function TypingText({
   const lastAudioTimeRef = useRef<number>(0);
 
   useEffect(() => {
-    // Reset state instantly on text/delay changes
     setDisplayedText("");
     setIsFinished(false);
 
@@ -44,18 +43,16 @@ export default function TypingText({
       }
 
       const typingElapsed = elapsed - delay;
-      // Calculate character index cleanly based on elapsed time and target speed
       const targetCharCount = Math.min(
         text.length,
-        Math.floor(typingElapsed / Math.max(12, speed)) + 1
+        Math.floor(typingElapsed / Math.max(10, speed)) + 1
       );
 
       if (targetCharCount > lastCharCount) {
         const newChar = text[targetCharCount - 1];
-        // Trigger soft click audio if character is visible & not whitespace
         if (playSound && newChar && newChar.trim() !== "") {
           const now = performance.now();
-          if (now - lastAudioTimeRef.current >= 30) {
+          if (now - lastAudioTimeRef.current >= 35) {
             ambientSynth.playTypeClick();
             lastAudioTimeRef.current = now;
           }

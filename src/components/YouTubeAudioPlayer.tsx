@@ -11,6 +11,7 @@ declare global {
 interface YouTubeAudioPlayerProps {
   videoId: string;
   isPlaying: boolean;
+  startTime?: number;
   volume?: number; // 0 to 100
   onReady?: () => void;
 }
@@ -18,6 +19,7 @@ interface YouTubeAudioPlayerProps {
 export default function YouTubeAudioPlayer({
   videoId,
   isPlaying,
+  startTime = 31,
   volume = 80,
   onReady
 }: YouTubeAudioPlayerProps) {
@@ -59,6 +61,7 @@ export default function YouTubeAudioPlayer({
               iv_load_policy: 3,
               modestbranding: 1,
               loop: 1,
+              start: startTime,
               playlist: videoId, // Required to loop a single video in YouTube Player
             },
             events: {

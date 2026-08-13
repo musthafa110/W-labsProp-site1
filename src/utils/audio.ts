@@ -158,7 +158,7 @@ class AmbientSynthesizer {
     osc.stop(time + duration);
   }
 
-  // Triggered on key typing for a soft, pleasant mechanical keystroke sound
+  // Triggered on key typing for a soft, realistic, minimal laptop keystroke click sound
   public playTypeClick() {
     try {
       if (!this.ctx) {
@@ -173,29 +173,50 @@ class AmbientSynthesizer {
       }
 
       const time = this.ctx.currentTime;
-      // Slight pitch variation for natural keyboard feel (1500Hz - 2100Hz)
-      const freq = 1500 + Math.random() * 600;
 
-      const osc = this.ctx.createOscillator();
-      const gainNode = this.ctx.createGain();
-
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(freq, time);
-
-      // Ultra-soft, gentle percussive envelope
-      gainNode.gain.setValueAtTime(0, time);
-      gainNode.gain.linearRampToValueAtTime(0.016, time + 0.002);
-      gainNode.gain.exponentialRampToValueAtTime(0.0001, time + 0.022);
-
-      osc.connect(gainNode);
-      if (this.nodes) {
-        gainNode.connect(this.nodes.masterGain);
-      } else {
-        gainNode.connect(this.ctx.destination);
+      // 1. Organic filtered noise impulse (tactile key tap)
+      const bufferSize = Math.floor(this.ctx.sampleRate * 0.012); // ~12ms length
+      const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+      const channelData = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        channelData[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.22));
       }
 
-      osc.start(time);
-      osc.stop(time + 0.025);
+      const noiseNode = this.ctx.createBufferSource();
+      noiseNode.buffer = buffer;
+
+      const bandpass = this.ctx.createBiquadFilter();
+      bandpass.type = "bandpass";
+      // Subtle randomized pitch variation (1800Hz - 2400Hz) for natural variation
+      bandpass.frequency.setValueAtTime(1800 + (Math.random() - 0.5) * 600, time);
+      bandpass.Q.setValueAtTime(2.0, time);
+
+      const noiseGain = this.ctx.createGain();
+      const volume = 0.012 + (Math.random() - 0.5) * 0.003; // Ultra-soft gain
+      noiseGain.gain.setValueAtTime(volume, time);
+      noiseGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.011);
+
+      noiseNode.connect(bandpass);
+      bandpass.connect(noiseGain);
+
+      // 2. Subtle low body tick (bottoming out feel)
+      const bodyOsc = this.ctx.createOscillator();
+      const bodyGain = this.ctx.createGain();
+      bodyOsc.type = "sine";
+      bodyOsc.frequency.setValueAtTime(600 + (Math.random() - 0.5) * 180, time);
+
+      bodyGain.gain.setValueAtTime(0.006, time);
+      bodyGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.009);
+
+      bodyOsc.connect(bodyGain);
+
+      const output = this.nodes ? this.nodes.masterGain : this.ctx.destination;
+      noiseGain.connect(output);
+      bodyGain.connect(output);
+
+      noiseNode.start(time);
+      bodyOsc.start(time);
+      bodyOsc.stop(time + 0.012);
     } catch {
       // Ignore audio context errors gracefully
     }
