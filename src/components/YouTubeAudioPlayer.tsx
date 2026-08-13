@@ -47,9 +47,10 @@ export default function YouTubeAudioPlayer({
         clearInterval(checkInterval);
 
         try {
+          const originUrl = typeof window !== "undefined" ? window.location.origin : "";
           playerRef.current = new window.YT.Player(containerId, {
-            height: "1",
-            width: "1",
+            height: "200",
+            width: "200",
             videoId: videoId,
             playerVars: {
               autoplay: isPlaying ? 1 : 0,
@@ -62,21 +63,34 @@ export default function YouTubeAudioPlayer({
               modestbranding: 1,
               loop: 1,
               start: startTime,
-              playlist: videoId, // Required to loop a single video in YouTube Player
+              playlist: videoId,
+              enablejsapi: 1,
+              playsinline: 1,
+              origin: originUrl,
             },
             events: {
               onReady: (event: any) => {
-                event.target.setVolume(volume);
-                if (isPlaying) {
-                  event.target.playVideo();
+                try {
+                  event.target.setVolume(volume);
+                  event.target.unMute();
+                  if (isPlaying) {
+                    event.target.playVideo();
+                  }
+                } catch (e) {
+                  console.warn("YouTube onReady player error:", e);
                 }
                 if (onReady) onReady();
               },
               onStateChange: (event: any) => {
                 // If it ends, play again (backup loop)
                 if (event.data === (window.YT?.PlayerState?.ENDED || 0)) {
-                  event.target.playVideo();
+                  try {
+                    event.target.playVideo();
+                  } catch (e) {}
                 }
+              },
+              onError: (err: any) => {
+                console.warn("YouTube player error:", err);
               }
             }
           });
@@ -91,14 +105,12 @@ export default function YouTubeAudioPlayer({
     if (window.YT && window.YT.Player) {
       initPlayer();
     } else {
-      // Setup global API ready callback
       const previousCallback = window.onYouTubeIframeAPIReady;
       window.onYouTubeIframeAPIReady = () => {
         if (previousCallback) previousCallback();
         initPlayer();
       };
 
-      // Polling fallback
       checkInterval = setInterval(() => {
         if (window.YT && window.YT.Player) {
           initPlayer();
@@ -111,9 +123,7 @@ export default function YouTubeAudioPlayer({
       if (playerRef.current && typeof playerRef.current.destroy === "function") {
         try {
           playerRef.current.destroy();
-        } catch (e) {
-          // Ignore destruction errors
-        }
+        } catch (e) {}
       }
     };
   }, [videoId]);
@@ -123,8 +133,9 @@ export default function YouTubeAudioPlayer({
     if (playerRef.current && typeof playerRef.current.getPlayerState === "function") {
       try {
         const state = playerRef.current.getPlayerState();
-        // YT.PlayerState: UNSTARTED = -1, ENDED = 0, PLAYING = 1, PAUSED = 2, BUFFERING = 3, CUED = 5
         if (isPlaying) {
+          playerRef.current.unMute();
+          playerRef.current.setVolume(volume);
           if (state !== 1) {
             playerRef.current.playVideo();
           }
@@ -137,22 +148,12 @@ export default function YouTubeAudioPlayer({
         console.warn("YouTube Player state change error:", e);
       }
     }
-  }, [isPlaying]);
-
-  // Handle volume changes
-  useEffect(() => {
-    if (playerRef.current && typeof playerRef.current.setVolume === "function") {
-      try {
-        playerRef.current.setVolume(volume);
-      } catch (e) {
-        // Ignore
-      }
-    }
-  }, [volume]);
+  }, [isPlaying, volume]);
 
   return (
-    <div className="absolute top-0 left-0 w-1 h-1 pointer-events-none opacity-0 overflow-hidden z-[-9999]">
+    <div className="fixed -top-[9999px] -left-[9999px] w-[200px] h-[200px] pointer-events-none opacity-0 overflow-hidden z-[-9999]">
       <div id={containerId} />
     </div>
   );
 }
+

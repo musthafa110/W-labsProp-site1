@@ -32,9 +32,18 @@ export default function AdminPanel() {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
 
-  // Fetch responses in real-time unconditionally
+  // Fetch responses in real-time unconditionally with fallback
   useEffect(() => {
     setResponsesLoading(true);
+    let unsubscribeFallback: (() => void) | null = null;
+
+    const parseDocDate = (data: any) => {
+      if (data.timestamp?.toDate) return data.timestamp.toDate().getTime();
+      if (data.timestamp) return new Date(data.timestamp).getTime();
+      if (data.createdAt?.toDate) return data.createdAt.toDate().getTime();
+      return 0;
+    };
+
     const q = query(collection(db, "responses"), orderBy("timestamp", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map(doc => ({
@@ -44,11 +53,27 @@ export default function AdminPanel() {
       setResponses(data);
       setResponsesLoading(false);
     }, (error) => {
-      console.error("Error loading responses:", error);
-      setResponsesLoading(false);
+      console.warn("Primary query with orderBy failed, using fallback collection snapshot:", error);
+      
+      // Fallback query without orderBy
+      unsubscribeFallback = onSnapshot(collection(db, "responses"), (snapshot) => {
+        const data = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        data.sort((a, b) => parseDocDate(b) - parseDocDate(a));
+        setResponses(data);
+        setResponsesLoading(false);
+      }, (fallbackError) => {
+        console.error("Error loading responses:", fallbackError);
+        setResponsesLoading(false);
+      });
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      if (unsubscribeFallback) unsubscribeFallback();
+    };
   }, []);
 
   // Delete Response Handler

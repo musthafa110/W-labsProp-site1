@@ -40,10 +40,15 @@ type AppStage =
 export default function App() {
   const canvasRef = useRef<HeartsCanvasRef>(null);
 
-  // Admin Mode detection
-  const [isAdminMode, setIsAdminMode] = useState(window.location.hash === "#admin");
+  // Admin Mode state (never auto-open on initial load)
+  const [isAdminMode, setIsAdminMode] = useState(false);
 
   useEffect(() => {
+    // Clear #admin hash on initial load if present so admin panel never opens automatically
+    if (window.location.hash === "#admin") {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+
     const handleHashChange = () => {
       setIsAdminMode(window.location.hash === "#admin");
     };
@@ -82,7 +87,7 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Safe Audio play helper
+  // Toggle music playback for the requested YouTube track
   const handleToggleMusic = () => {
     setMusicPlaying(prev => !prev);
   };
@@ -387,6 +392,22 @@ export default function App() {
             </a>
           </div>
         </footer>
+      )}
+
+      {/* Simple Secret Admin Access Heart Emoji in Bottom Left Corner */}
+      {stage !== "loading" && (
+        <button
+          onClick={() => {
+            triggerSparkleSoundAndEffect();
+            setIsAdminMode(true);
+            window.location.hash = "#admin";
+          }}
+          className="fixed bottom-3 left-3 z-50 p-1 cursor-pointer text-sm leading-none opacity-60 hover:opacity-100 hover:scale-125 transition-all duration-200 select-none"
+          title="Access Admin Panel"
+          aria-label="Admin Panel"
+        >
+          ❤️
+        </button>
       )}
     </div>
   );

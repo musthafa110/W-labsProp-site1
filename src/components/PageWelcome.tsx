@@ -92,27 +92,6 @@ export default function PageWelcome({ onNext, onSparkle }: PageWelcomeProps) {
           </p>
         </motion.div>
       </motion.div>
-
-      {/* Secret Admin Access Heart in the bottom left */}
-      <motion.button
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 0.7, scale: 1 }}
-        whileHover={{ 
-          opacity: 1, 
-          scale: 1.15, 
-          rotate: 12
-        }}
-        transition={{ type: "spring", stiffness: 400, damping: 15 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => {
-          onSparkle();
-          window.location.hash = "#admin";
-        }}
-        className="btn-liquid-crystal fixed bottom-6 left-6 z-50 p-3 rounded-full cursor-pointer group flex items-center justify-center"
-        title="Access Admin Panel"
-      >
-        <Heart className="w-5 h-5 text-rose-500 fill-rose-400 group-hover:fill-rose-500 transition-transform duration-300 group-hover:scale-110" />
-      </motion.button>
     </div>
   );
 }

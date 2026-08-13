@@ -80,6 +80,12 @@ class AmbientSynthesizer {
   }
 
   public start() {
+    if (!this.ctx) {
+      this.init();
+    }
+    if (this.ctx?.state === "suspended") {
+      this.ctx.resume().catch(() => {});
+    }
     if (this.isPlaying || !this.ctx) return;
     this.isPlaying = true;
     this.nextNoteTime = this.ctx.currentTime;
