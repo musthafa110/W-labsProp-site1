@@ -47,7 +47,7 @@ export default function PageWelcome({ onNext, onSparkle }: PageWelcomeProps) {
             transition={{ delay: 0.3, duration: 1 }}
             className="font-serif text-5xl md:text-6xl tracking-tight text-[#2C1D20] font-medium"
           >
-            Hi Afra <span className="inline-block animate-bounce" style={{ animationDuration: "3s" }}>❤️</span>
+            Hi Zahra <span className="inline-block animate-bounce" style={{ animationDuration: "3s" }}>❤️</span>
           </motion.h1>
 
           <motion.p

@@ -97,7 +97,7 @@ export default function PageLetter({ onNext, onSparkle }: PageLetterProps) {
 
           <div className="space-y-3 flex flex-col items-center">
             <h3 className="font-serif italic text-2xl text-rose-800/80 font-medium">
-              For Afra
+              For Zahra
             </h3>
             
             {/* Beautiful crystal sub-badge */}
@@ -143,7 +143,7 @@ export default function PageLetter({ onNext, onSparkle }: PageLetterProps) {
           {/* Letter Body */}
           <div className="space-y-6 text-[#4F393C] font-serif text-lg leading-relaxed relative z-10">
             <p className="font-serif italic font-semibold text-rose-600/90 border-b border-rose-200/40 pb-3 text-2xl">
-              Dear Afra,
+              Dear Zahra,
             </p>
 
             <p className="text-base md:text-lg">
@@ -167,7 +167,7 @@ export default function PageLetter({ onNext, onSparkle }: PageLetterProps) {
             </p>
 
             <p className="text-base md:text-lg">
-              Afra, if you're willing to wait for me while I settle in life—it may take around two years—I promise that when I'm ready, I'll come to you, and I will marry you if our families give us their blessing to build our life together. I'm asking for your patience because I'm serious about this and want to build a future with you. Whatever your answer may be, I'll always respect your decision. ❤️
+              Zahra, if you're willing to wait for me while I settle in life—it may take around two years—I promise that when I'm ready, I'll come to you, and I will marry you if our families give us their blessing to build our life together. I'm asking for your patience because I'm serious about this and want to build a future with you. Whatever your answer may be, I'll always respect your decision. ❤️
             </p>
 
             <p className="text-base md:text-lg">
@@ -177,7 +177,7 @@ export default function PageLetter({ onNext, onSparkle }: PageLetterProps) {
             <div className="pt-8 border-t border-rose-200/30 flex justify-between items-end">
               <div className="space-y-1">
                 <p className="text-[10px] font-sans tracking-widest text-[#9A7D82] uppercase font-semibold">With respect,</p>
-                <p className="font-cursive text-3xl text-rose-500 tracking-wider">Msk</p>
+                <p className="font-cursive text-3xl text-rose-500 tracking-wider">Zain</p>
               </div>
               <Heart className="w-5 h-5 text-rose-400 fill-rose-300 animate-pulse" />
             </div>

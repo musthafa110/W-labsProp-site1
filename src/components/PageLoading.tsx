@@ -15,7 +15,7 @@ export default function PageLoading({ onComplete }: PageLoadingProps) {
     "Brewing warm melodies...",
     "Polishing celestial constellations...",
     "Unfolding sincere feelings...",
-    "Creating something just for Afra..."
+    "Creating something just for Zahra..."
   ];
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export default function PageLoading({ onComplete }: PageLoadingProps) {
         <div className="space-y-3">
           <h2 className="font-serif text-2xl tracking-wide text-rose-700/80 font-medium flex items-center justify-center space-x-1.5">
             <Sparkles className="w-4 h-4 text-amber-400 animate-spin" style={{ animationDuration: "10s" }} />
-            <span>Afra...</span>
+            <span>Zahra...</span>
             <Sparkles className="w-4 h-4 text-amber-400 animate-spin" style={{ animationDuration: "12s" }} />
           </h2>
           <motion.p

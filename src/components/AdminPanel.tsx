@@ -116,7 +116,7 @@ export default function AdminPanel() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.setAttribute("href", url);
-    link.setAttribute("download", `afra_proposal_responses_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute("download", `zahra_proposal_responses_${new Date().toISOString().slice(0, 10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

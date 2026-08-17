@@ -367,13 +367,13 @@ export default function App() {
           <div className="flex justify-center items-center space-x-1 text-rose-400">
             <Heart className="w-3.5 h-3.5 fill-rose-400" />
             <span className={`font-cursive text-2xl tracking-wide ${isDarkTheme ? "text-rose-200" : "text-rose-500"}`}>
-              Afra
+              Zahra
             </span>
             <Heart className="w-3.5 h-3.5 fill-rose-400" />
           </div>
           
           <p className={`text-[10px] tracking-widest uppercase font-semibold font-sans ${isDarkTheme ? "text-slate-400/70" : "text-[#9E858A]"}`}>
-            "Made with sincerity and respect, just for Afra."
+            "Made with sincerity and respect, just for Zahra."
           </p>
 
           <div className="pt-2 flex justify-center items-center">

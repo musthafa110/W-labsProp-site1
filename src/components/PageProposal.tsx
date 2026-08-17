@@ -101,7 +101,7 @@ export default function PageProposal({ onAnswer, onSparkle }: PageProposalProps)
               {/* Title and message */}
               <div className="space-y-4">
                 <h2 className="font-serif text-5xl md:text-6xl text-rose-500 font-medium tracking-tight">
-                  Afra...
+                  Zahra...
                 </h2>
                 <p className="font-serif italic text-xl md:text-2xl text-[#3A1E22] leading-relaxed max-w-md mx-auto">
                   "Would you like to give me a chance to know each other better? ❤️"
